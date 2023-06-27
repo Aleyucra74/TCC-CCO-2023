@@ -7,9 +7,9 @@ from conn.connectionBoto import connection_aws
 
 def main():        
 
-    secretKey = "ASIA3JP3R2PLZIUB4O5K"
-    secretAccessKey = "F+dx9qVwTDgEWVEwXF7jSga7Ctu3ls+tv7Gs5P6S"
-    secretToken = "FwoGZXIvYXdzEPr//////////wEaDPzUu3i2fIzM9tk//SLHAcHVGsY9tLjYeGokJlRo5w0Nxh5UBhRwO4fKStEfve0WSeZ2ri07J9DnsJomDgOMELV0pB10uZhsE5zlLH1s0u4NNc21BvzgBmX3WTVNTuXpQ2fkA7JArGnu2lpf/8mb51NHNjcb0Ml8jP8gcK6zgDCtKxrndsSvyFdZwQ8G1IKSOC0W+dEl972itrwzKtgYxK/pjp37ukPCZQUV24XLWt6JYgxEiXcDFycV15VZ1Ke+HIms58AWjZnrHKsAXKKnaJvJ6OY1w7YoztTopAYyLS2WSCO3VsDuPsfGwyVo+RkoAlTPJ+66ofu36ZaaEfx4tAACZnKi57rODXfoyA=="
+    secretKey = ""
+    secretAccessKey = "
+    secretToken = ""
     bucketName = "s3-data-tcc-raw"
 
     s3Client = connection_aws(secretKey,secretAccessKey,secretToken)
