@@ -8,9 +8,9 @@ import saveImg as sv
 def main():
     today = datetime.now().strftime('%d%m%Y')
 
-    secretKey = "ASIA3JP3R2PLWKOVZIIR"
-    secretAccessKey = "DxMKa/Ju1ZIlc/hM8PbmK3kbjI1C5ORH2fxzbUJv"
-    secretToken = "FwoGZXIvYXdzEPb//////////wEaDEBIgYYtLM3eNm/8aSLHAXc/uwzEu+6WPL7GuYQLWmV/dF5pPcAMoWqYiBaYCF/4FnKmD9rrEeKPaa2tagYKVFNfRwiTrR+0ZDJCUzhupidIInpBZm9Ac7Xsrs/Bo1CxUt51DHjY538T1rDL6pSfJ0y4tVX9safT5WRlXydPjPAVt2mAjm7WMRjUJNP1fB7XM+WmP6cPdAUVdytVOPDpACAWH3FJNCIBBkEkttb+FD8ady27rm0ZFqBYb4cKzm9GTTzTq1d6JRNo85uGu3eJlbCUXJQR6jAomO/npAYyLY85Ao+UryefE/PN5YepTtGxznYIVlVe7M6wKqkn3aysSim7Q28U+QXrPNOTPQ=="
+    secretKey = "ASIA3JP3R2PLVLBJAZYL"
+    secretAccessKey = "RBpyWIz8n8prZnB0TI0DJ3RPRALlOdQmtN9i0vb3"
+    secretToken = "FwoGZXIvYXdzEAsaDJjZb3XkV4ti/hS91CLHAW3V9Wnf/0UQRrDy/QP9vcID34bQqqkzctc8b7rgPXMRGvQFKQcHDo9onN39FVTlctXTnq82UqbkUt0XXEveiuVoLtxMA9GLg28MGyZ+0LupxU5SNRphWl4SrcHG3Y23e0hY8UzqtnkIchnjgD2eTk1Zdepe8ZV+BQyW6dkIzZ2OiwkTJIAAYNlvS+f8di1L9aO4H0+5PrQg6B/WYzDbLNxNx/uMo5WUxTWU9BgHtL0pgmXLytvyEvy9CzGalZdnMYa+Owsm7MMoy7fspAYyLdaDY6xkLwdSwojCEPT5/eJDkRmMjL3KHC7+devLOtaAIAWnmgTvJcbSTVU78g=="
 
     s3Client = connection_aws(secretKey,secretAccessKey,secretToken)
 
