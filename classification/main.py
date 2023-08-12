@@ -76,11 +76,11 @@ async def main(secretKey, secretAccessKey, secretToken,bucketName):
         ultimoPredict = ultimoModificado['Key']
         #save generated csv to s3 bucket
         s3Client.upload_file(
-                        fr'C:\Users\alexa\Documents\BANDTEC\TCC\TCC-CCO-2023\classification\{folder}\{output_filename}',
+                        fr'/home/ec2-user/TCC-CCO-2023/classification/{folder}/{output_filename}',
                         "s3-data-tcc-processed",
                         f"{folder}/{output_filename}"
                     )
-        print(fr'C:\Users\alexa\Documents\BANDTEC\TCC\TCC-CCO-2023\classification\{folder}\{output_filename}')
+        print(fr'/home/ec2-user/TCC-CCO-2023/classification/{folder}/{output_filename}')
         print(f"{folder}/{output_filename}")
         print("File Uploaded to S3...")
         time.sleep(10)
