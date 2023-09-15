@@ -3,33 +3,53 @@ import os
 import requests
 import boto3
 
+import boto3
+
 def obter_arquivo_mais_recente(nome_s3, nome_bucket):
     s3 = boto3.client('s3')
-
-  
     response = s3.list_objects_v2(Bucket=nome_bucket)
     objetos = response['Contents']
-
     objetos_ordenados = sorted(objetos, key=lambda x: x['LastModified'], reverse=True)
-
     nome_arquivo_mais_recente = objetos_ordenados[0]['Key']
-
     obj = s3.get_object(Bucket=nome_bucket, Key=nome_arquivo_mais_recente)
     body = obj['Body'].read().decode()
-
     return nome_arquivo_mais_recente, body
 
+
+
 def porcentagem(conteudo_arquivo):
-    valores = conteudo_arquivo
+    linhas = conteudo_arquivo.strip().split('\n')
+    soma_confidence = 0.0
+    soma_confidence_gun = 0.0
 
-    valores_separados = valores.split(";")
-    primeiro_valor = int(valores_separados[0]) * 2
-    outros_valores = [int(valor) for valor in valores_separados[1:]]
-    soma_ponderada = (primeiro_valor + sum(outros_valores))/ 4
-    resultado_formatado = f"{soma_ponderada:.2f}"
-    resultado = str(resultado_formatado)
+    for linha in linhas[1:]:  # Começando do índice 1 para ignorar o cabeçalho
+        valores = linha.split(';')  # Usar ';' como separador
+        if len(valores) >= 5:  # Verificar se a linha tem pelo menos 5 colunas (a coluna do confidence)
+            confidence_str = valores[4]
+            name = valores[6].lower()  # Convertendo para minúsculas
+            
+            try:
+                confidence = round(float(confidence_str) * 100) / 100
+                print(f"Valor lido e convertido: {confidence:.2f}")
+                
+                if name == 'gun':
+                    print(f"Nome da classe: {name}")
+                    print(f"Valor de confidence 'gun' antes da adição de 10: {confidence_str}")
+                    confidence_gun = float(confidence_str) *2
+                    print(f"Valor de confidence 'gun' após a adição de 10: {confidence_gun}")
+                    soma_confidence_gun += confidence_gun
+                else:
+                    soma_confidence += confidence
+                
+            except ValueError:
+                print(f"Não foi possível converter o valor de confidence: {confidence_str}")
 
-    return resultado
+    print(f"Resultado da soma (confiança normal): {soma_confidence:.2f}")
+    print(f"Resultado da soma (confiança gun): {soma_confidence_gun:.2f}")
+    
+    somafinal = (soma_confidence + soma_confidence_gun) * 100 / 4
+    return round(somafinal , 2 )  # Arredondar a soma com duas casas decimais 
+
 
 
 def last_chat_id(token):
@@ -80,10 +100,10 @@ def mover_arquivo(nome_s3, nome_bucket_origem, nome_bucket_destino):
 def lambda_handler(event, context):
     
     # Configurações
-    nome_s3 = "s3-data-tcc-processed"
-    nome_bucket_origem = "s3-data-tcc-processed"
-    nome_bucket_destino = "s3-data-tcc-processed-alert"
-    token = os.environ.get('TOKEN')
+    nome_s3 = ""
+    nome_bucket_origem = ""
+    nome_bucket_destino = ""
+    token = os.environ.get('TOKEN') #variavel de ambiente Lambda
 
     try:
         nome_arquivo, conteudo_arquivo = mover_arquivo(nome_s3, nome_bucket_origem, nome_bucket_destino)
@@ -106,3 +126,4 @@ def lambda_handler(event, context):
             'statusCode': 500,
             'body': json.dumps(f'Erro na execução da função lambda: {str(e)}')
         }
+
