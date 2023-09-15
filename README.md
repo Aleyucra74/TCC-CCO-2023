@@ -3,12 +3,15 @@
   <p>
   <strong>Algoritimo para análise de segurança residencial utilizando visão computacional.</strong>  
   </p>
-  gif
+  <p align="center">
+  <img src="IMAGES/y2meta.gif" width="500"><br/>
+  <i>Exemplo ao aplicar o modelo treinado.</i>
+</p>
 </div>
 
 ## <div align="center">Descrição</div>
 
-O projeto consiste em....................
+<p align="center">Neste trabalho tem como objetivo criar um sistema de identificação de determinados padrões do comportamento delitivo gerando alertas para o cenário residencial e de pequenos comércios criando um esquema de score e pontuação dos padrões delitivos juntamente com o auxílio de técnicas computacionais especificas como as redes neurais, inteligência artificial em uma arquitetura em nuvem que processara esses dados de câmeras de segurança em real time,  ao identificar um possível comportamento delitivo será enviado um alerta via Telegran e assim o usuário final terá o controle para fazer a tomada de decisão.</p>
 
 ## <div align="center">Como começar?</div>
 
