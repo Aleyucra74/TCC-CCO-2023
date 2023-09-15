@@ -1,10 +1,11 @@
 import os
 import re
-import boto3
-import asyncio
-import torch
-import datetime
 import time
+import boto3
+import torch
+import asyncio
+import argparse
+import datetime
 import pandas as pd
 from conn.connectionBoto import connection_aws
 
@@ -51,13 +52,8 @@ modelPeople.classes = 0
 os.system('cls')
 ultimoPredict = None
 
-async def main():        
+async def main(secretKey, secretAccessKey, secretToken,bucketName):        
     global ultimoPredict
-
-    secretKey = "ASIA3JP3R2PLVLBJAZYL"
-    secretAccessKey = "RBpyWIz8n8prZnB0TI0DJ3RPRALlOdQmtN9i0vb3"
-    secretToken = "FwoGZXIvYXdzEAsaDJjZb3XkV4ti/hS91CLHAW3V9Wnf/0UQRrDy/QP9vcID34bQqqkzctc8b7rgPXMRGvQFKQcHDo9onN39FVTlctXTnq82UqbkUt0XXEveiuVoLtxMA9GLg28MGyZ+0LupxU5SNRphWl4SrcHG3Y23e0hY8UzqtnkIchnjgD2eTk1Zdepe8ZV+BQyW6dkIzZ2OiwkTJIAAYNlvS+f8di1L9aO4H0+5PrQg6B/WYzDbLNxNx/uMo5WUxTWU9BgHtL0pgmXLytvyEvy9CzGalZdnMYa+Owsm7MMoy7fspAYyLdaDY6xkLwdSwojCEPT5/eJDkRmMjL3KHC7+devLOtaAIAWnmgTvJcbSTVU78g=="
-    bucketName = "s3-data-tcc-raw"
 
     s3Client = connection_aws(secretKey,secretAccessKey,secretToken)
     models = [modelHelmet, modelHoodie, modelPeople, modelWeapon]
@@ -93,4 +89,12 @@ async def main():
 
 if __name__ == "__main__":
     while True:
-        asyncio.run(main())
+        parser = argparse.ArgumentParser(description="Models Classification")
+        parser.add_argument("--SK")
+        parser.add_argument("--SAK")
+        parser.add_argument("--ST")
+        parser.add_argument("--BKT")
+
+        args = parser.parse_args()
+
+        asyncio.run(main(args.SK, args.SAK, args.ST, args.BKT))
