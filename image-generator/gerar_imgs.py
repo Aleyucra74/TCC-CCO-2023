@@ -5,7 +5,7 @@ import numpy as np
 if not os.path.exists('./s3-data-preprocessed-tcc'):
     os.makedirs('s3-data-preprocessed-tcc')
 
-cap = cv2.VideoCapture('./Burglary037_x264.mp4')
+cap = cv2.VideoCapture(r"C:\Users\alexa\Downloads\y2meta.net_480p-he-shot-my-arm-off-liquor-store-owner-stops-armed-robbery-by-firing-back-at-suspects.mp4")
 
 fps = cap.get(cv2.CAP_PROP_FPS)
 
