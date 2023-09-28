@@ -43,5 +43,5 @@
 | :---: | :---: | :---: |
 
 ## <div align="center">Licença</div>
-
+[MIT](https://mit-license.org/)
 
