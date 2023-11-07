@@ -100,10 +100,10 @@ def mover_arquivo(nome_s3, nome_bucket_origem, nome_bucket_destino):
 def lambda_handler(event, context):
     
     # Configurações
-    nome_s3 = ""
-    nome_bucket_origem = ""
-    nome_bucket_destino = ""
-    token = os.environ.get('TOKEN') #variavel de ambiente Lambda
+    nome_s3 = "s3-data-tcc-processed"
+    nome_bucket_origem = "s3-data-tcc-processed"
+    nome_bucket_destino = "s3-data-tcc-processed-alert"
+    token = os.environ.get('TOKEN')
 
     try:
         nome_arquivo, conteudo_arquivo = mover_arquivo(nome_s3, nome_bucket_origem, nome_bucket_destino)

@@ -16,7 +16,7 @@ def main():
 
     timer = 0
     interval = 1  # Save one frame per second
-    cam = cv2.VideoCapture(0)
+    cam = cv2.VideoCapture('http://192.168.15.14:4747/video')
     while True:
         ret,frame = cam.read()
 
