@@ -44,19 +44,22 @@ async def ultimo_objeto(conn,bucket):
     return lastModified
 
 #load models
-modelWeapon = torch.hub.load('ultralytics/yolov5', 'custom', path='./MODELOS/bestgun.pt', trust_repo=True)
-modelHelmet = torch.hub.load('ultralytics/yolov5', 'custom', path='./MODELOS/besthelmet.pt',trust_repo=True)
-modelHoodie = torch.hub.load('ultralytics/yolov5', 'custom', path='./MODELOS/besthoodie.pt',trust_repo=True)
-modelPeople = torch.hub.load('ultralytics/yolov5', 'custom', path='./MODELOS/bestperson.pt',trust_repo=True)
-modelPeople.classes = 0
-os.system('cls')
+# modelWeapon = torch.hub.load('ultralytics/yolov5', 'custom', path='/home/ubuntu/TCC-CCO-2023/classification/MODELOS/bestgun.pt', trust_repo=True)
+# modelHelmet = torch.hub.load('ultralytics/yolov5', 'custom', path='/home/ubuntu/TCC-CCO-2023/classification/MODELOS/besthelmet.pt',trust_repo=True)
+# modelHoodie = torch.hub.load('ultralytics/yolov5', 'custom', path='/home/ubuntu/TCC-CCO-2023/classification/MODELOS/besthoodie.pt',trust_repo=True)
+# modelPeople = torch.hub.load('ultralytics/yolov5', 'custom', path='/home/ubuntu/TCC-CCO-2023/classification/MODELOS/bestperson.pt',trust_repo=True)
+# modelPeople.classes = 0
+
+model = torch.hub.load('ultralytics/yolov5', 'custom', path='/home/ubuntu/TCC-CCO-2023/classification/MODELOS/best.pt',trust_repo=True)
+
+os.system('clear')
 ultimoPredict = None
 
 async def main(secretKey, secretAccessKey, secretToken,bucketName):        
     global ultimoPredict
 
     s3Client = connection_aws(secretKey,secretAccessKey,secretToken)
-    models = [modelHelmet, modelHoodie, modelPeople, modelWeapon]
+    # models = [modelHelmet, modelHoodie, modelPeople, modelWeapon]
 
     ultimoModificado = await ultimo_objeto(s3Client, bucketName)
 
@@ -64,11 +67,12 @@ async def main(secretKey, secretAccessKey, secretToken,bucketName):
         filename = ultimoModificado['Key'].split('/')[-1]
         predicts = pd.DataFrame()
         #use models
-        for model in models:
-            predict = model(ultimoModificado['Key'])
-            df = predict.pandas().xyxy[0]
-            df['filename'] = filename
-            predicts = pd.concat([predicts,df], ignore_index=True)
+        # for model in models:
+        predict = model(ultimoModificado['Key'])
+        df = predict.pandas().xyxy[0]
+        df['filename'] = filename
+        predicts = pd.concat([predicts,df], ignore_index=True)
+            
         folder = ultimoModificado['Key'].split('/')[0]
         output_filename = filename.split('.')[0]+".csv"
         predicts.to_csv(folder+'\/'+output_filename, sep=';',index=False)
@@ -76,11 +80,11 @@ async def main(secretKey, secretAccessKey, secretToken,bucketName):
         ultimoPredict = ultimoModificado['Key']
         #save generated csv to s3 bucket
         s3Client.upload_file(
-                        fr'C:\Users\alexa\Documents\BANDTEC\TCC\TCC-CCO-2023\classification\{folder}\{output_filename}',
+                        fr'/home/ubuntu/TCC-CCO-2023/classification/{folder}/{output_filename}',
                         "s3-data-tcc-processed",
                         f"{folder}/{output_filename}"
                     )
-        print(fr'C:\Users\alexa\Documents\BANDTEC\TCC\TCC-CCO-2023\classification\{folder}\{output_filename}')
+        print(fr'/home/ubuntu/TCC-CCO-2023/classification/{folder}/{output_filename}')
         print(f"{folder}/{output_filename}")
         print("File Uploaded to S3...")
         time.sleep(10)
